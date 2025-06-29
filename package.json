@@ -1,0 +1,38 @@
+{
+  "name": "financial-analytics-dashboard",
+  "version": "1.0.0",
+  "description": "Full-stack financial application with dynamic data visualization and CSV export",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:backend": "cd backend && npm run dev",
+    "dev:frontend": "cd frontend && npm start",
+    "install:all": "npm install && cd backend && npm install && cd ../frontend && npm install",
+    "build": "cd frontend && npm run build",
+    "start": "cd backend && npm start",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down",
+    "docker:logs": "docker-compose logs -f",
+    "docker:restart": "docker-compose restart",
+    "docker:clean": "docker-compose down -v",
+    "setup": "npm run docker:up && npm run install:all && cp backend/env.example backend/.env && cd backend && npm run seed",
+    "setup:local": "npm run install:all && cp backend/env.example backend/.env && cd backend && npm run seed"
+  },
+  "keywords": [
+    "financial",
+    "dashboard",
+    "analytics",
+    "react",
+    "nodejs",
+    "mongodb",
+    "docker"
+  ],
+  "author": "Financial Analytics Team",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "dependencies": {
+    "nodemailer": "^7.0.3"
+  }
+}

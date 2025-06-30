@@ -30,7 +30,7 @@ import {
   ChevronLeft as ChevronLeftIcon,
 } from '@mui/icons-material';
 import { useAuth } from '../contexts/AuthContext';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const drawerWidth = 280;
 
@@ -43,6 +43,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -67,6 +68,21 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     { text: 'Analytics', icon: <TrendingUpIcon />, path: '/analytics' },
     { text: 'Accounts', icon: <AccountBalanceIcon />, path: '/accounts' },
   ];
+
+  const getPageTitle = () => {
+    switch (location.pathname) {
+      case '/dashboard':
+        return 'Dashboard';
+      case '/analytics':
+        return 'Analytics';
+      case '/accounts':
+        return 'Accounts';
+      case '/settings':
+        return 'Settings';
+      default:
+        return 'Dashboard';
+    }
+  };
 
   const drawer = (
     <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
@@ -142,6 +158,8 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         {menuItems.map((item) => (
           <ListItem key={item.text} disablePadding>
             <ListItemButton
+              onClick={() => navigate(item.path)}
+              selected={location.pathname === item.path}
               sx={{
                 mx: 1,
                 mb: 0.5,
@@ -180,15 +198,23 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       {/* Footer */}
       <Box sx={{ p: 2, borderTop: '1px solid #334155' }}>
         <ListItemButton
-          onClick={handleProfileMenuOpen}
+          onClick={() => navigate('/settings')}
+          selected={location.pathname === '/settings'}
           sx={{
             borderRadius: 2,
             '&:hover': {
               background: 'rgba(99, 102, 241, 0.1)',
             },
+            '&.Mui-selected': {
+              background: 'linear-gradient(135deg, #6366f1 0%, #818cf8 100%)',
+              color: 'white',
+              '&:hover': {
+                background: 'linear-gradient(135deg, #4f46e5 0%, #6366f1 100%)',
+              },
+            },
           }}
         >
-          <ListItemIcon sx={{ color: 'text.secondary' }}>
+          <ListItemIcon sx={{ color: 'inherit' }}>
             <SettingsIcon />
           </ListItemIcon>
           <ListItemText
@@ -226,7 +252,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
-            Dashboard
+            {getPageTitle()}
           </Typography>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
             <IconButton color="inherit">

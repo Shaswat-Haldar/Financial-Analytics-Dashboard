@@ -11,6 +11,9 @@ import Dashboard from './components/Dashboard';
 import Layout from './components/Layout';
 import ForgotPassword from './components/ForgotPassword';
 import ResetPassword from './components/ResetPassword';
+import Analytics from './components/Analytics';
+import Accounts from './components/Accounts';
+import Settings from './components/Settings';
 
 const theme = createTheme({
   palette: {
@@ -166,6 +169,36 @@ const App: React.FC = () => {
                     <PrivateRoute>
                       <Layout>
                         <Dashboard />
+                      </Layout>
+                    </PrivateRoute>
+                  }
+                />
+                <Route
+                  path="/analytics"
+                  element={
+                    <PrivateRoute>
+                      <Layout>
+                        <Analytics />
+                      </Layout>
+                    </PrivateRoute>
+                  }
+                />
+                <Route
+                  path="/accounts"
+                  element={
+                    <PrivateRoute>
+                      <Layout>
+                        <Accounts />
+                      </Layout>
+                    </PrivateRoute>
+                  }
+                />
+                <Route
+                  path="/settings"
+                  element={
+                    <PrivateRoute>
+                      <Layout>
+                        <Settings />
                       </Layout>
                     </PrivateRoute>
                   }
